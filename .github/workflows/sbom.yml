@@ -2,10 +2,10 @@ name: GenerateCycloneDXSBOM
 on:
   push:
     branches:
-      - main
+      - master
   pull_request:
     branches:
-      - main
+      - master
 jobs:
   generate-sbom:
     runs-on: ubuntu-latest
