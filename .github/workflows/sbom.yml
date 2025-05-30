@@ -1,4 +1,4 @@
-name: Generate CycloneDX SBOM
+name: GenerateCycloneDXSBOM
 on:
   push:
     branches:
