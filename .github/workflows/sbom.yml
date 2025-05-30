@@ -1,4 +1,4 @@
-name: GenerateCycloneDXSBOM
+name: Generate CycloneDX SBOM
 on:
   push:
     branches:
@@ -12,14 +12,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+      - name: Verify package files
+        run: ls -l package.json package-lock.json
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 18
       - name: Install dependencies
         run: npm ci
       - name: Install CycloneDX tool
-        run: npm install -g @cyclonedx/cyclonedx-npm
+        run: npm install -g @cyclonedx/cyclonedx-npm@1.2.0
       - name: Generate SBOM
         run: cyclonedx-npm --output-format JSON --output-file bom.json
       - name: Upload SBOM as artifact
