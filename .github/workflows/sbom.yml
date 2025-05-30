@@ -1,27 +1,30 @@
+yaml
 name: Generate CycloneDX SBOM
-     on:
-       push:
-         branches:
-           - master
-       pull_request:
-     jobs:
-       generate-sbom:
-         runs-on: ubuntu-latest
-         steps:
-         - name: Checkout code
-           uses: actions/checkout@v4
-         - name: Set up Node.js
-           uses: actions/setup-node@v4
-           with:
-             node-version: '20'
-         - name: Install dependencies
-           run: npm install
-         - name: Install CycloneDX tool
-           run: npm install -g @cyclonedx/cyclonedx-npm
-         - name: Generate SBOM
-           run: cyclonedx-npm --output-format JSON --output-file bom.json
-         - name: Upload SBOM as artifact
-           uses: actions/upload-artifact@v4
-           with:
-             name: cyclonedx-sbom
-             path: bom.json
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  generate-sbom:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Install dependencies
+        run: npm install
+      - name: Install CycloneDX tool
+        run: npm install -g @cyclonedx/cyclonedx-npm
+      - name: Generate SBOM
+        run: cyclonedx-npm --output-format JSON --output-file bom.json
+      - name: Upload SBOM as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: cyclonedx-sbom
+          path: bom.json
